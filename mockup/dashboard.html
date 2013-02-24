@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Maya Home</title>
+	
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-responsive.css">
+	<link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui-1.10.0.custom.css">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+	<link rel="stylesheet" type="text/css" href="css/mayahome.css">
+	
+	<script>
+		function refreshWidget(widgetId) {
+			$('#widget-refresh-link'+widgetId).addClass('desactivate');
+			$('#widget-refresh-text'+widgetId).text('En cours ');
+			$('#widget-refresh-icon'+widgetId).removeClass('icon-refresh').addClass('icon-spinner icon-spin');
+			setTimeout(function() {
+				$('#widget-refresh-link'+widgetId).removeClass('desactivate');
+				$('#widget-refresh-text'+widgetId).text('Rafraîchir ');
+				$('#widget-refresh-icon'+widgetId).removeClass('icon-spinner icon-spin').addClass('icon-refresh');
+			}, 3000);
+		}
+		
+		function activateWidget(widgetId) {
+			$('#widget-action-on'+widgetId).html("<i class='icon-spinner icon-spin'></i>").addClass('disabled desactivate');
+			setTimeout(function() {
+				$('#widget-action-on'+widgetId);
+				$('#widget-action-off'+widgetId).removeClass('disabled desactivate');
+				$('#widget-img'+widgetId).attr('src','images/ampoule-on.png');
+				$('#widget-action-on'+widgetId).text('On');
+			}, 2000);
+		}
+		
+		function desactivateWidget(widgetId) {
+			$('#widget-action-off'+widgetId).html("<i class='icon-spinner icon-spin'></i>").addClass('disabled desactivate');
+			setTimeout(function() {			
+				$('#widget-action-on'+widgetId).removeClass('disabled desactivate');
+				$('#widget-img'+widgetId).attr('src','images/ampoule-off.png');
+				$('#widget-action-off'+widgetId).text('Off');
+			}, 2000);
+		}
+
+	</script>
+</head>
+<body>
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<a class="brand">MayaHome</a>
+			<ul class="nav">
+				<li><a href="dashboard.html"><i class="icon-th"></i> Dashboard</a></li>
+			</ul>
+			<ul class="nav pull-right">
+				<li><a href="rooms.html"><i class="icon-cogs"></i> Configuration</a></li>
+				<li class="dropdown">
+				<div class="btn-group">
+					<a class="btn" href="#"><i class="icon-user"></i> Administrateur</a>
+					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="#"><i class="icon-off"></i> Logout</a></li>
+					</ul>
+				</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<ul class="thumbnails">
+			<li class="span3">
+				<div class="thumbnail container-fluid">
+					<div class="row-fluid widget-bar">
+						Lumière Louane
+						<div class="pull-right">
+							<i class="icon-signal"></i>
+							<a href="#"><i class="icon-remove"></i></a>
+						</div>
+					</div>
+					<div class="row-fluid widget-body">
+						<div class="span6">
+							<img id="widget-img1" class="widget-img pull-left" src="images/ampoule-on.png">
+						</div>
+						<div class="span6">
+							<div class="widget-actions-container">
+								<div class="widget-actions-bloc">
+									<a id="widget-action-on1" href="javascript:activateWidget(1);" class="btn btn-small btn-success disabled desactivate">On</a>
+									<a id="widget-action-off1" href="javascript:desactivateWidget(1);" class="btn btn-small btn-danger">Off</a>
+								</div>
+							</div>
+							<div class="widget-refresh">
+								<small id='widget-refresh-text1'>Rafraîchir </small><a id="widget-refresh-link1" href="javascript:refreshWidget(1);"><i id="widget-refresh-icon1" class="icon-refresh"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+			<li class="span3">
+				<div class="thumbnail container-fluid">
+					<div class="row-fluid widget-bar">
+						Spots du salon
+						<div class="pull-right">
+							<i class="icon-signal muted"></i>
+							<a href="#"><i class="icon-remove"></i></a>
+						</div>
+					</div>
+					<div class="row-fluid widget-body">
+						<div class="span6">
+							<img id="widget-img2" class="widget-img pull-left" src="images/ampoule-on.png">
+						</div>
+						<div class="span6">
+							<div class="widget-actions-container">
+								<div class="widget-actions-bloc">
+									<div id='slider1' class="slider"></div>
+									<div id='slider1-text'>20 %</div>
+								</div>
+							</div>
+							<div class="widget-refresh">
+								<small id='widget-refresh-text2'>Rafraîchir </small><a id="widget-refresh-link2" href="javascript:refreshWidget(2);"><i id="widget-refresh-icon2" class="icon-refresh"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+			<li class="span3">
+				<div class="thumbnail container-fluid">
+					<div class="row-fluid widget-bar">
+						Volet du Salon Gauche
+						<div class="pull-right">
+							<i class="icon-signal"></i>
+							<a href="#"><i class="icon-remove"></i></a>
+						</div>
+					</div>
+					<div class="row-fluid widget-body">
+						<div class="span6">
+							<img id="widget-img3" class="widget-img pull-left" src="images/roller-shutter.jpg">
+						</div>
+						<div class="span6">
+							<div class="widget-actions-container">
+								<div class="widget-actions-bloc">
+									<div id='slider2' class="slider"></div>
+									<div id='slider2-text'>75 %</div>
+								</div>
+							</div>
+							<div class="widget-refresh">
+								<small id='widget-refresh-text3'>Rafraîchir </small><a id="widget-refresh-link3" href="javascript:refreshWidget(3);"><i id="widget-refresh-icon3" class="icon-refresh"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+			<li class="span3">
+				<div class="thumbnail container-fluid">
+					<div class="row-fluid widget-bar">
+						Température Extérieure
+						<div class="pull-right">
+							<i class="icon-signal"></i>
+							<a href="#"><i class="icon-remove"></i></a>
+						</div>
+					</div>
+					<div class="row-fluid widget-body">
+						<div class="span6">
+							<img id="widget-img4" class="widget-img pull-left" src="images/meteo/sunny.png" >
+						</div>
+						<div class="span6">
+							<div class="widget-actions-container">
+								<div class="widget-actions-bloc">
+									<h4 class="widget">16°C</h4>
+									<small class="widget">Rabastens</small>
+								</div>
+							</div>
+							<div class="widget-refresh">
+								<small id='widget-refresh-text4'>Rafraîchir </small><a id="widget-refresh-link4" href="javascript:refreshWidget(4);"><i id="widget-refresh-icon4" class="icon-refresh"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+			<li class="span3">
+				<div class="thumbnail container-fluid">
+					<div class="row-fluid widget-bar">
+						<div class="pull-right">
+							<i class="icon-signal"></i>
+							<a href="#"><i class="icon-remove"></i></a>
+						</div>
+					</div>
+					<div class="row-fluid widget-body">
+						<div class="span6">
+							<img id="widget-img5" class="widget-img pull-left" >
+						</div>
+						<div class="span6">
+							<div class="widget-actions-container">
+								<div class="widget-actions-bloc">
+								</div>
+							</div>
+							<div class="widget-refresh">
+								<small id='widget-refresh-text5'>Rafraîchir </small><a id="widget-refresh-link5" href="javascript:refreshWidget(5);"><i id="widget-refresh-icon5" class="icon-refresh"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+			<li class="span3">
+				<div class="thumbnail container-fluid">
+					<div class="row-fluid widget-bar">
+						<div class="pull-right">
+							<i class="icon-signal"></i>
+							<a href="#"><i class="icon-remove"></i></a>
+						</div>
+					</div>
+					<div class="row-fluid widget-body">
+						<div class="span6">
+							<img id="widget-img6" class="widget-img pull-left" >
+						</div>
+						<div class="span6">
+							<div class="widget-actions-container">
+								<div class="widget-actions-bloc">
+								</div>
+							</div>
+							<div class="widget-refresh">
+								<small id='widget-refresh-text6'>Rafraîchir </small><a id="widget-refresh-link6" href="javascript:refreshWidget(6);"><i id="widget-refresh-icon6" class="icon-refresh"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+			<li class="span3">
+				<div class="thumbnail container-fluid">
+					<div class="row-fluid widget-bar">
+						<div class="pull-right">
+							<i class="icon-signal"></i>
+							<a href="#"><i class="icon-remove"></i></a>
+						</div>
+					</div>
+					<div class="row-fluid widget-body">
+						<div class="span6">
+							<img id="widget-img7" class="widget-img pull-left" >
+						</div>
+						<div class="span6">
+							<div class="widget-actions-container">
+								<div class="widget-actions-bloc">
+								</div>
+							</div>
+							<div class="widget-refresh">
+								<small id='widget-refresh-text7'>Rafraîchir </small><a id="widget-refresh-link7" href="javascript:refreshWidget(7);"><i id="widget-refresh-icon7" class="icon-refresh"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+    
+    <script src="js/jquery-1.9.0.min.js"></script>
+	<script src="js/jquery-ui-1.10.0.custom.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+	
+	<script>
+		$( ".slider" ).slider({
+			range: "min",
+			min: 0,
+			max: 100,
+			value: 20,
+			slide: function( event, ui ) {
+				$('#'+$(this).attr('id')+'-text').text( ui.value + " %" );
+			}
+		});
+		$( "#slider-text" ).val( $( ".slider" ).slider( "value" ) );
+	</script>
+</body>
+</html>
