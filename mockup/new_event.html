@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Maya Home</title>
+	
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-responsive.css">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-timepicker.min.css">
+	<link rel="stylesheet" type="text/css" href="css/mayahome.css">
+	<script>
+		
+	</script>
+</head>
+<body>
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<a class="brand">MayaHome</a>
+			<ul class="nav">
+				<li><a href="dashboard.html"><i class="icon-th"></i> Dashboard</a></li>
+			</ul>
+			<ul class="nav pull-right">
+				<li><a href="rooms.html"><i class="icon-cogs"></i> Configuration</a></li>
+				<li class="dropdown">
+				<div class="btn-group">
+					<a class="btn" href="#"><i class="icon-user"></i> Administrateur</a>
+					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="#"><i class="icon-off"></i> Logout</a></li>
+					</ul>
+				</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span3">
+				<ul class="nav nav-list sidenav sidenav-fixed">
+					<li><a href="rooms.html"><i class="icon-chevron-right"></i> Pièces</a></li>
+					<li><a href="#"><i class="icon-chevron-right"></i> Appareils</a></li>
+					<li class="active"><a href="events.html"><i class="icon-chevron-right"></i> Scénarios</a></li>
+					<li><a href="#"><i class="icon-chevron-right"></i> Protocoles</a></li>
+				</ul>
+			</div>
+			<div class="span9">
+				<div class="row-fluid">
+					<div class="span9">
+						<form class="form-horizontal">
+							<legend>Scénario</legend>
+							<div class="control-group">
+								<input class="input-xxlarge" type="text" placeholder="Nom">
+							</div>
+							<div class="control-group">
+								<label class="checkbox">
+									<input type="checkbox"> Activé
+								</label>
+							</div>
+							<legend>Déclencheurs</legend>			
+								<div id="criteriaContainer">
+								</div>
+								<div class="control-group">
+									<div class="btn-group">
+										<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+											<i class="icon-plus-sign"></i>
+										</a>
+										<ul class="dropdown-menu right" >
+											<li><a href="javascript:addHoursCriteria();">Horaires</a></li>
+											<li class="dropdown-submenu">
+												<a href="#">Appareil</a>
+													<ul class="dropdown-menu" >
+														<li><a href="javascript:addDeviceCriteria('Chambre du bébé');">Chambre du bébé</a></li>
+														<li><a href="javascript:addDeviceCriteria('Chambre des parents');">Chambre des parents</a></li>
+														<li><a href="javascript:addDeviceCriteria('Salle à manger');">Salle à manger</a></li>
+													</ul>
+											</li>
+										</ul>
+									</div>
+								</div>
+							<legend>Actions</legend>
+							
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+	<script src="js/jquery-1.9.0.min.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="js/dropfile.js"></script>
+	<script type="text/javascript" src="js/bootstrap-timepicker.min.js"></script>
+	<script type="text/javascript" src="js/mayahome-criteria.js"></script>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Maya Home</title>
+	
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-responsive.css">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+	<link rel="stylesheet" type="text/css" href="css/mayahome.css">
+	<script>
+		var nextRoomId = 4;
+		var roomIdToDelete;
+		function editRow(rowIndex, isNewRow) {
+			var roomNameDiv = $("#roomName"+rowIndex);
+			var roomName = roomNameDiv.text();
+			roomNameDiv.empty();
+			var roomNameTextBox = $(document.createElement('input')).attr('class','input-xlarge').attr('type','text').attr('id','inputRoomName'+rowIndex).attr('placeHolder','Libellé de la pièce').attr('oldtext',roomName).val(roomName);
+			roomNameTextBox.appendTo(roomNameDiv);
+
+			$('#addRowButton').addClass('disabled desactivate');
+			$('#imgRoom'+rowIndex).dropfile();
+			$('#icon-pencil'+rowIndex).attr('class','icon-ok icon-green');
+			$('#icon-remove'+rowIndex).addClass('icon-red');
+			$('#edit-link'+rowIndex).attr('data-original-title','Valider');
+			$('#remove-link'+rowIndex).attr('data-original-title','Annuler');
+			if (isNewRow) {
+				$('#edit-link'+rowIndex).attr('href','javascript:submitRow('+rowIndex+', true);');
+				$('#remove-link'+rowIndex).attr('href','javascript:cancelRow('+rowIndex+', true);');
+			} else {
+				$('#edit-link'+rowIndex).attr('href','javascript:submitRow('+rowIndex+');');
+				$('#remove-link'+rowIndex).attr('href','javascript:cancelRow('+rowIndex+');');
+			}
+			$('.row-content[id!=row'+rowIndex+']').addClass('row-disabled');
+			$('.edit-link[id!=edit-link'+rowIndex+']').addClass('desactivate');
+			$('.remove-link[id!=remove-link'+rowIndex+']').addClass('desactivate');
+		}
+		function askRemoveRow(rowIndex) {
+			roomIdToDelete = rowIndex;
+			$('#roomRemoveModal').modal('show');
+		}
+		function removeRow() {
+			$('#roomRemoveModal').modal('hide');
+			$('#row'+roomIdToDelete).remove();
+		}
+		function submitRow(rowIndex, isNewRow) {
+			var roomNameInput = $('#inputRoomName'+rowIndex);
+			var newRoomName = roomNameInput.val();
+			restoreRow(rowIndex, newRoomName);
+			if (isNewRow) {
+				nextRoomId++;
+			}
+		}
+		function cancelRow(rowIndex, isNewRow) {
+			$('#imgRoom'+rowIndex).attr('src',null);
+			var roomNameInput = $('#inputRoomName'+rowIndex);
+			var oldRoomName = roomNameInput.attr('oldtext');
+			if (isNewRow) {
+				roomIdToDelete = rowIndex;
+				removeRow();
+			}
+			restoreRow(rowIndex, oldRoomName);
+		}
+		function restoreRow(rowIndex, roomName) {
+			var roomNameDiv = $("#roomName"+rowIndex);
+			roomNameDiv.empty();
+			roomNameDiv.text(roomName);
+
+			$('#addRowButton').removeClass('disabled desactivate');
+			$('#imgRoom'+rowIndex).undropfile();
+			$('#icon-pencil'+rowIndex).attr('class','icon-pencil');
+			$('#edit-link'+rowIndex).attr('href','javascript:editRow('+rowIndex+');').attr('data-original-title','Editer');
+			$('#icon-remove'+rowIndex).removeClass('icon-red');
+			$('#remove-link'+rowIndex).attr('href','javascript:askRemoveRow('+rowIndex+');').attr('data-original-title','Supprimer');
+			$('.row-content').removeClass('row-disabled');
+			$('.edit-link').removeClass('desactivate');
+			$('.remove-link').removeClass('desactivate');
+		}
+		function addRow() {
+			var newRow = "<tr id='row"+nextRoomId+"' class='row-content'>" +
+						"<td style='vertical-align: middle'>"+nextRoomId+"</td>" +
+						"<td style='vertical-align: middle'>" +
+							"<div id='roomName"+nextRoomId+"'></div>" +
+						"</td>" +
+						"<td style='vertical-align: middle'><img id='imgRoom"+nextRoomId+"'></td>" +
+						"<td style='vertical-align: middle'>" +
+							"<a id='edit-link"+nextRoomId+"' class='close edit-link' rel='tooltip' title='Editer'>" +
+								"<i id='icon-pencil"+nextRoomId+"'></i>" +
+							"</a>" +
+							"<a id='remove-link"+nextRoomId+"' class='close remove-link' rel='tooltip' title='Supprimer'>" +
+								"<i id='icon-remove"+nextRoomId+"' class='icon-remove'></i>" +
+							"</a>" +
+						"</td>" +
+					"</tr>";
+			$('#roomsBody').append(newRow);
+			$("[rel='tooltip']").tooltip();
+			editRow(nextRoomId, true);
+		}
+	</script>
+</head>
+<body>
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<a class="brand">MayaHome</a>
+			<ul class="nav">
+				<li><a href="dashboard.html"><i class="icon-th"></i> Dashboard</a></li>
+			</ul>
+			<ul class="nav pull-right">
+				<li><a href="rooms.html"><i class="icon-cogs"></i> Configuration</a></li>
+				<li class="dropdown">
+				<div class="btn-group">
+					<a class="btn" href="#"><i class="icon-user"></i> Administrateur</a>
+					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="#"><i class="icon-off"></i> Logout</a></li>
+					</ul>
+				</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span3">
+				<ul class="nav nav-list sidenav sidenav-fixed">
+					<li class="active"><a href="rooms.html"><i class="icon-chevron-right"></i> Pièces</a></li>
+					<li><a href="#"><i class="icon-chevron-right"></i> Appareils</a></li>
+					<li><a href="events.html"><i class="icon-chevron-right"></i> Scénarios</a></li>
+					<li><a href="#"><i class="icon-chevron-right"></i> Protocoles</a></li>
+				</ul>
+			</div>
+			<div class="span9">
+				<div class="row-fluid">
+					<div class="span9">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th style="width: 5%">#</th>
+									<th>Nom de la pièce</th>
+									<th style="width: 25%">Image</th>
+									<th style="width: 10%"></th>
+								</tr>
+							</thead>
+							<tbody id="roomsBody">
+								<tr id="row1" class="row-content">
+									<td style="vertical-align: middle">1</td>
+									<td style="vertical-align: middle">
+										<div id="roomName1">Chambre du bébé</div>
+									</td>
+									<td style="vertical-align: middle"><img id='imgRoom1'></td>
+									<td style="vertical-align: middle">
+										<a id="edit-link1" class="close edit-link" href="javascript:editRow(1);" rel="tooltip" title="Editer">
+											<i id="icon-pencil1" class="icon-pencil"></i>
+										</a>
+										<a id="remove-link1" class="close remove-link" href="javascript:askRemoveRow(1);" rel="tooltip" title="Supprimer">
+											<i id="icon-remove1" class="icon-remove"></i>
+										</a>
+									</td>
+								</tr>
+								<tr id="row2" class="row-content">
+									<td style="vertical-align: middle">2</td>
+									<td style="vertical-align: middle">
+										<div id="roomName2">Chambre des parents</div>
+									</td>
+									<td style="vertical-align: middle"><img id='imgRoom2'></td>
+									<td style="vertical-align: middle">
+										<a id="edit-link2" class="close edit-link" href="javascript:editRow(2);" rel="tooltip" title="Editer">
+											<i id="icon-pencil2" class="icon-pencil"></i>
+										</a>
+										<a id="remove-link2" class="close remove-link" href="javascript:askRemoveRow(2);" rel="tooltip" title="Supprimer">
+											<i id="icon-remove2" class="icon-remove"></i>
+										</a>
+									</td>
+								</tr>
+								<tr id="row3" class="row-content">
+									<td style="vertical-align: middle">3</td>
+									<td style="vertical-align: middle">
+										<div id="roomName3">Salle à manger</div>
+									</td>
+									<td style="vertical-align: middle"><img id='imgRoom2'></td>
+									<td style="vertical-align: middle">
+										<a id="edit-link3" class="close edit-link" href="javascript:editRow(3);" rel="tooltip" title="Editer">
+											<i id="icon-pencil3" class="icon-pencil"></i>
+										</a>
+										<a id="remove-link3" class="close remove-link" href="javascript:askRemoveRow(3);" rel="tooltip" title="Supprimer">
+											<i id="icon-remove3" class="icon-remove"></i>
+										</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div>
+							<a id='addRowButton' href="javascript:addRow();" class="btn btn-primary">+</a>
+							<div class="pagination pagination-centered">
+								<ul>
+									<li class="disabled"><a href="#">«</a></li>
+									<li class="active"><a href="#">1</a></li>
+									<li><a href="#">2</a></li>
+									<li><a href="#">»</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="roomRemoveModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ 			<div class="modal-header">
+    				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    				<h3 id="myModalLabel">Suppression d'une pièce</h3>
+  			</div>
+  			<div class="modal-body">
+  				<p>Etes-bous sûr de vouloir supprimer définitivement cette pièce ?</p>
+  			</div>
+			<div class="modal-footer">
+				<a href="javascript:removeRow()" class="btn btn-danger">Supprimer</a>
+				<button class="btn" data-dismiss="modal" aria-hidden="true">Annuler</button>				
+			</div>
+		</div>
+	</div>
+    
+    <script src="js/jquery-1.9.0.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="js/dropfile.js"></script>
+	<script>
+		$("[rel='tooltip']").tooltip();
+	</script>
+</body>
+</html>
